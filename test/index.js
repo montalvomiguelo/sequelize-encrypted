@@ -2,7 +2,10 @@ import assert from 'assert';
 import Sequelize from 'sequelize';
 import EncryptedField from '../';
 
-const sequelize = new Sequelize('postgres://postgres@db:5432/postgres');
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: ':memory:'
+});
 
 const key1 = 'a593e7f567d01031d153b5af6d9a25766b95926cff91c6be3438c7f7ac37230e';
 const key2 = 'a593e7f567d01031d153b5af6d9a25766b95926cff91c6be3438c7f7ac37230f';
@@ -23,7 +26,7 @@ describe('sequelize-encrypted', () => {
     });
 
     before('create models', async () => {
-        await User.sync({force: true});
+        await User.sync();
     });
 
     it('should save an encrypted field', async () => {
