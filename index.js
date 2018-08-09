@@ -6,7 +6,7 @@ function EncryptedField(Sequelize, key, opt) {
     }
 
     var self = this;
-    self.key = new Buffer(key, 'hex');
+    self.key = Buffer.from(key, 'hex');
     self.Sequelize = Sequelize;
 
     opt = opt || {};
@@ -32,7 +32,7 @@ EncryptedField.prototype.vault = function(name) {
                 return {};
             }
 
-            previous = new Buffer(previous);
+            previous = Buffer.from(previous);
 
             var iv = previous.slice(0, self._iv_length);
             var content = previous.slice(self._iv_length, previous.length);
